@@ -22,7 +22,9 @@
     "test": "NODE_ENV=test nyc --reporter=lcov -r tsconfig-paths/register -r ts-node/register tape test/**/*.spec.{ts,js} | tap-spec",
     "tap": "tap",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "npm run snyk-protect",
+    "git": "git add . && git commit -m ",
+    "postgit": "git push origin mongo"
   },
   "nyc": {
     "include": [
@@ -34,8 +36,8 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
+      "11commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "11pre-commit": "lint-staged"
     }
   },
   "lint-staged": {

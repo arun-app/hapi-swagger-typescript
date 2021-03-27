@@ -29,10 +29,11 @@ export default class Repository<T> {
   }
 
   public getById(_id: string,model:any): Promise<any> {
-    return model.findOne(_id).then((document: any, error: any) => {
+    console.log(_id)
+    return model.findById(_id).then((document: any, error: any) => {
       if (error) {
         console.log(error,"error")
-        return error
+        return error   
       }
       return document
     })
@@ -68,7 +69,7 @@ export default class Repository<T> {
   }
 
   public updateById(_id: string, data: T, model:any): Promise<T> {
-    return model.update().then((document: any, error: any) => {
+    return model.update({_id:_id},data).then((document: any, error: any) => {
       if (error) {
         console.log(error,"error")
         return error
@@ -88,7 +89,7 @@ export default class Repository<T> {
   }
 
   public deleteById(_id: string,model:any): Promise<string> {
-    return model.remove( _id).then((document: any, error: any) => {
+    return model.remove( {_id:_id}).then((document: any, error: any) => {
       if (error) {
         console.log(error,"error")
         return error
