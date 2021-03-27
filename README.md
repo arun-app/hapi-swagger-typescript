@@ -30,9 +30,9 @@ This starter kit comes with the following features:
 1. Download this project as a zip.
 2. Run `npm install`
 3. Run `npm run nodemon:start`
-4. Visit [http://localhost:8080/documentation](http://localhost:8080/documentation) to view swagger docs.
-5. Visit [http://localhost:8080/api/users](http://localhost:8080/api/users) to test the REST API.
-6. Visit [http://localhost:8080/status](http://localhost:8080/status) to view the status monitor.
+4. Visit [http://localhost:8081/documentation](http://localhost:8081/documentation) to view swagger docs.
+5. Visit [http://localhost:8081/api/users](http://localhost:8081/api/users) to test the REST API.
+6. Visit [http://localhost:8081/status](http://localhost:8081/status) to view the status monitor.
 
 UPDATED: Now there's a CLI that currently support creating a new project from this repo: [create-typescript-api](https://github.com/BlackBoxVision/create-typescript-api)
 
@@ -72,6 +72,8 @@ If you found a bug, or you have an answer, or whatever. Please, raise an [issue]
 
 Of course, if you see something that you want to upgrade from this library, or a bug that needs to be solved, PRs are welcome!
 
-## License
+# Things to change while uSing this Template --arun
 
-Distributed under the **MIT license**. See [LICENSE](https://github.com/BlackBoxVision/typescript-hapi-starter/blob/master/LICENSE) for more information.
+copy /api/users and rename based on your the Route
+
+import Routes of your created api into /route.js and create a new instance of it

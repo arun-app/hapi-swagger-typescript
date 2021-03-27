@@ -1,6 +1,6 @@
 FROM node:8.1.2-alpine
 
-MAINTAINER BlackBox Vision
+MAINTAINER Arun
 
 RUN rm -rf PROJECT_DIR/node_modules
 

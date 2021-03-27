@@ -1,12 +1,13 @@
 export default {
+  mongoDbUri : 'mongodb://localhost/pingya-hapi',
   swagger: {
     options: {
       info: {
         title: 'API Documentation',
         version: 'v1.0.0',
         contact: {
-          name: 'John doe',
-          email: 'johndoe@johndoe.com',
+          name: 'Arun',
+          email: 'arun.s.applogiq@gmail.com',
         },
       },
       grouping: 'tags',

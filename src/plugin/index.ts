@@ -37,6 +37,20 @@ export default class Plugins {
     }
   }
 
+  // public static async  Db(server: Hapi.Server): Promise<Error | any> {
+  //   const dbOptions={
+  //     url:"mongodb://localhost/pingya-hapi",
+  //     settings:{
+  //       poolSize:10
+  //     },
+  //     decorate:true
+  //   };
+  //   await server.register({
+  //     plugin:require('hapi-mongodb'),
+  //     options:dbOptions
+  //   });
+  // }
+
   public static async registerAll(server: Hapi.Server): Promise<Error | any> {
     if (process.env.NODE_ENV === 'development') {
       await Plugins.status(server);

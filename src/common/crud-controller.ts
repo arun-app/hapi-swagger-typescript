@@ -7,8 +7,11 @@ import newResponse from '../helper/response';
 export default class CrudController<T> {
   constructor(
     public id: string = 'id',
-    private crudResolver: CrudResolver<T>
-  ) {}
+    private crudResolver: CrudResolver<T>,
+    public model: any,
+  ) {
+    this.model = model;
+  }
 
   public create = async (
     request: Hapi.Request,
@@ -16,15 +19,15 @@ export default class CrudController<T> {
   ): Promise<any> => {
     try {
       Logger.info(`POST - ${request.url.href}`);
-
-      const data: any = await this.crudResolver.save(request.payload as any);
-
+      const data: any = await this.crudResolver.save(request.payload as any, this.model);
       return toolkit.response(
         newResponse(request, {
-          value: { _id: data['_id'] },
+          // value: { _id: data['_id'] },
+          value: data,
         })
       );
     } catch (error) {
+      Logger.error(error);
       return toolkit.response(
         newResponse(request, {
           boom: Boom.badImplementation(error),
@@ -42,10 +45,7 @@ export default class CrudController<T> {
 
       const id = encodeURIComponent(request.params[this.id]);
 
-      const updatedEntity: T = await this.crudResolver.updateOneById(
-        id,
-        request.payload
-      );
+      const updatedEntity: T = await this.crudResolver.updateOneById(id,request.payload, this.model);
 
       if (!updatedEntity) {
         return toolkit.response(
@@ -78,7 +78,7 @@ export default class CrudController<T> {
 
       const id = encodeURIComponent(request.params[this.id]);
 
-      const entity: T = await this.crudResolver.getOneById(id);
+      const entity: T = await this.crudResolver.getOneById(id, this.model);
 
       if (!entity) {
         return toolkit.response(
@@ -109,7 +109,7 @@ export default class CrudController<T> {
     try {
       Logger.info(`GET - ${request.url.href}`);
 
-      const entities: T[] = await this.crudResolver.getAll();
+      const entities: T[] = await this.crudResolver.getAll( this.model);
 
       return toolkit.response(
         newResponse(request, {
@@ -134,7 +134,7 @@ export default class CrudController<T> {
 
       const id = encodeURIComponent(request.params[this.id]);
 
-      await this.crudResolver.deleteOneById(id);
+      await this.crudResolver.deleteOneById(id, this.model);
 
       return toolkit.response(
         newResponse(request, {

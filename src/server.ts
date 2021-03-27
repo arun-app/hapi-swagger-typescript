@@ -18,7 +18,7 @@ export default class Server {
       });
       
       Server._instance.validator(require('@hapi/joi'));
-
+ 
       await Plugin.registerAll(Server._instance);
       await Router.loadRoutes(Server._instance);
 
@@ -41,6 +41,7 @@ export default class Server {
       throw error;
     }
   }
+
 
   public static stop(): Promise<Error | void> {
     Logger.info(`Server - Stopping execution`);

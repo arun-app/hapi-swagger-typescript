@@ -1,67 +1,108 @@
-import * as DataStore from 'nedb';
+// import * as DataStore from 'nedb';
+const {db} = require('./database');
 
 export default class Repository<T> {
-  public dataSource = new DataStore({
-    inMemoryOnly: true,
-  });
 
-  public save(data: T): Promise<T> {
-    return new Promise((resolve, reject) => {
-      this.dataSource.insert(data, (error, document) => {
-        if (error) {
-          reject(error);
-        }
+  public dataSource =  db
 
-        resolve(document);
-      });
-    });
+  //  public dataSource = new DataStore({
+  //   inMemoryOnly: true,
+  // });
+
+  public save(data: T, model:any): Promise<T> {
+    return model.create(data).then((document: any, error: any) => {
+      if (error) {
+        console.log(error,"error")
+        return error
+      }
+      return document
+    })
+    // return new Promise((resolve, reject) => {
+      // this.dataSource.save(data, (error:any, document:any) => {
+      //   if (error) {
+      //     console.log(error,"error")
+      //     reject(error);
+      //   }
+      //   resolve(document);
+      // });
+    // });
   }
 
-  public getById(_id: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.dataSource.findOne({ _id }, (error, document) => {
-        if (error) {
-          reject(error);
-        }
+  public getById(_id: string,model:any): Promise<any> {
+    return model.findOne(_id).then((document: any, error: any) => {
+      if (error) {
+        console.log(error,"error")
+        return error
+      }
+      return document
+    })
+  //   return new Promise((resolve, reject) => {
+  //     this.dataSource.findOne({ _id }, (error:any, document:any) => {
+  //       if (error) {
+  //         reject(error);
+  //       }
 
-        resolve(document);
-      });
-    });
+  //       resolve(document);
+  //     });
+  //   });
   }
 
-  public getAll(): Promise<any[]> {
-    return new Promise((resolve, reject) => {
-      this.dataSource.find({}, {}, (error, documents) => {
-        if (error) {
-          reject(error);
-        }
+  public getAll(model:any): Promise<any[]> {
+    return model.find().then((document: any, error: any) => {
+      if (error) {
+        console.log(error,"error")
+        return error
+      }
+      return document
+    })
 
-        resolve(documents);
-      });
-    });
+    // return new Promise((resolve, reject) => {
+    //   this.dataSource.find({}, {}, (error:any, documents:any) => {
+    //     if (error) {
+    //       reject(error);
+    //     }
+
+    //     resolve(documents);
+    //   });
+    // });
   }
 
-  public updateById(_id: string, data: T): Promise<T> {
-    return new Promise((resolve, reject) => {
-      this.dataSource.update({ _id }, data, {}, error => {
-        if (error) {
-          reject(error);
-        }
+  public updateById(_id: string, data: T, model:any): Promise<T> {
+    return model.update().then((document: any, error: any) => {
+      if (error) {
+        console.log(error,"error")
+        return error
+      }
+      return this.getById(_id, model).then((value: any) => value);
+      // return document
+    })
+    // return new Promise((resolve, reject) => {
+    //   this.dataSource.update({ _id }, data, {}, (error:any )=> {
+    //     if (error) {
+    //       reject(error);
+    //     }
         
-        this.getById(_id).then(value => resolve(value));
-      });
-    });
+    //     this.getById(_id).then((value: any) => resolve(value));
+    //   });
+    // });
   }
 
-  public deleteById(_id: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      this.dataSource.remove({ _id }, error => {
-        if (error) {
-          reject(error);
-        }
+  public deleteById(_id: string,model:any): Promise<string> {
+    return model.remove( _id).then((document: any, error: any) => {
+      if (error) {
+        console.log(error,"error")
+        return error
+      }
+      return document
+    })
+  //   return new Promise((resolve, reject) => {
+  //     this.dataSource.remove({ _id }, (error:any) => {
+  //       if (error) {
+  //         reject(error);
+  //       }
 
-        resolve(_id);
-      });
-    });
+  //       resolve(_id);
+  //     });
+  //   });
   }
 }
